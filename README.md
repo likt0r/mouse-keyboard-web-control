@@ -6,6 +6,10 @@
 # install dependencies
 $ npm install
 
+# install Shell mouse keyboard control
+## linux
+$ sudo apt-get install xdotool
+
 # serve with hot reload at localhost:3000
 $ npm run dev
 
