@@ -117,14 +117,13 @@ export default {
 </script>
 <style>
 .touchPad {
-  position: fixed;
-  z-index: 100;
+  position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   color: thistle;
   opacity: 0.3;
-  background-color: transparent;
+  background-color: red;
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
   <v-container class="fill-height" fluid>
-    <TouchPad />
     <v-row align="center" justify="center">
       <v-col cols="12" sm="12" md="12" align="center">
         <Logo />
@@ -13,9 +12,6 @@
 import Logo from '~/components/Logo.vue'
 import TouchPad from '~/components/TouchPad.vue'
 export default {
-  components: {
-    Logo,
-    TouchPad,
-  },
+  components: {},
 }
 </script>
