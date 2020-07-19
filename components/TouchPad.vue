@@ -42,6 +42,8 @@ export default {
         () => (this.isClick = false),
         this.isClickTimeoutTime
       )
+
+      // mouse down when second finger on screen
       if (this.pointerOnScreen === 2) {
         axios.post('/api/mouse/mouse-down', {
           button: 'left',
@@ -76,6 +78,7 @@ export default {
         }
         this.isClick = false
       }
+      // mouse up when second finger leaves screen
       if (this.pointerOnScreen === 1) {
         axios.post('/api/mouse/mouse-up', {
           button: 'left',
