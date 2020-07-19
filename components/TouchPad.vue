@@ -21,6 +21,7 @@ let isClickTimeout
 export default {
   data() {
     return {
+      pointerOnScreen: 0,
       trackPointerPosition: false,
       isClickTimeoutTime: 250,
       isClick: false,
@@ -35,14 +36,20 @@ export default {
       this.trackPointerPosition = true
       startPosX = oldPosX = event.touches[0].clientX
       startPosY = oldPosY = event.touches[0].clientY
+      this.pointerOnScreen = event.touches.length
       this.isClick = true
       isClickTimeout = setTimeout(
         () => (this.isClick = false),
         this.isClickTimeoutTime
       )
+      if (this.pointerOnScreen === 2) {
+        axios.post('/api/mouse/mouse-down', {
+          button: 'left',
+        })
+      }
     },
     async touchMove(event) {
-      if (event.touches.length === 1) {
+      if (this.pointerOnScreen <= 2) {
         // move mouse cursor only with one finger
         this.moveThrottel.send({
           x: event.touches[0].clientX - oldPosX,
@@ -54,6 +61,7 @@ export default {
       event.preventDefault()
     },
     touchEnd(event) {
+      this.pointerOnScreen = event.touches.length
       if (this.isClick) {
         clearTimeout(isClickTimeout)
         if (
@@ -67,6 +75,11 @@ export default {
           })
         }
         this.isClick = false
+      }
+      if (this.pointerOnScreen === 1) {
+        axios.post('/api/mouse/mouse-up', {
+          button: 'left',
+        })
       }
       this.trackPointerPosition = false
       console.log('Touch End')

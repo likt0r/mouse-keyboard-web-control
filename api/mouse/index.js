@@ -20,10 +20,28 @@ app.post('/move', function (req, res) {
  */
 app.post('/click', function (req, res) {
   const { button } = req.body
-  // console.log('/click ', button)
+  console.log('/click ', button)
   if (button === 'left') exec(`xdotool click ${1}`)
   if (button === 'right') exec(`xdotool click ${3}`)
   if (button === 'middle') exec(`xdotool click ${2}`)
+  res.end()
+})
+
+app.post('/mouse-down', function (req, res) {
+  const { button } = req.body
+  console.log('/mouse-down ', button)
+  if (button === 'left') exec(`xdotool mousedown ${1}`)
+  if (button === 'right') exec(`xdotool mousedown ${3}`)
+  if (button === 'middle') exec(`xdotool mousedown ${2}`)
+  res.end()
+})
+
+app.post('/mouse-up', function (req, res) {
+  const { button } = req.body
+  console.log('/mouse-up ', button)
+  if (button === 'left') exec(`xdotool mouseup ${1}`)
+  if (button === 'right') exec(`xdotool mouseup ${3}`)
+  if (button === 'middle') exec(`xdotool mouseup ${2}`)
   res.end()
 })
 
