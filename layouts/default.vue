@@ -12,8 +12,8 @@
       dark
       mini-variant
       mini-variant-width="56"
-      router
       permanent
+      stateless
       fixed
       mandatory
     >
