@@ -63,7 +63,7 @@ export default {
   /*
    ** api routes
    */
-  serverMiddleware: ['~/api/mouse/index.js'],
+  serverMiddleware: ['~/api/mouse/index.js', '~/api/keyboard/index.js'],
 
   /*
    ** vuetify module configuration

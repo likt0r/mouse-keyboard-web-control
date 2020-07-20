@@ -1,6 +1,6 @@
 <template>
   <v-app dark @resize="resize">
-    <v-bottom-navigation v-if="!landScapeMode" dark app fixed router>
+    <v-bottom-navigation v-if="!uiLandscape" dark app fixed router>
       <v-btn v-for="button in buttons" :key="button.title" :to="button.to">
         <!-- <span>{{ button.title }}</span> -->
         <v-icon>{{ button.icon }}</v-icon>
@@ -8,7 +8,7 @@
     </v-bottom-navigation>
 
     <v-navigation-drawer
-      v-if="landScapeMode"
+      v-if="uiLandscape"
       dark
       mini-variant
       mini-variant-width="56"
@@ -34,7 +34,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-main>
+    <v-main :style="uiLandscape ? 'padding-left: 56px' : ''">
       <v-container fluid>
         <nuxt />
       </v-container>
@@ -44,13 +44,14 @@
 
 <script>
 import TouchPad from '~/components/TouchPad.vue'
+import { mapState, mapActions } from 'vuex'
+
 export default {
   components: {
     TouchPad,
   },
   data() {
     return {
-      landScapeMode: true,
       bottomNav: 0,
       clipped: false,
       drawer: false,
@@ -83,15 +84,20 @@ export default {
       title: 'Vuetify.js',
     }
   },
+  computed: {
+    ...mapState({ uiLandscape: (state) => state.device.uiLandscape }),
+  },
   methods: {
+    ...mapActions({ setUiLandscape: 'device/setUiLandscape' }),
     resize(event) {
       console.log(event)
     },
     setLandScapeMode() {
-      this.landScapeMode =
+      this.setUiLandscape(
         document.documentElement.clientWidth >
-        document.documentElement.clientHeight
-      console.log('set LandScapeMode', this.landScapeMode)
+          document.documentElement.clientHeight &&
+          this.$route.name !== 'keyboard'
+      )
     },
   },
   mounted() {
@@ -99,6 +105,11 @@ export default {
       window.addEventListener('resize', this.setLandScapeMode)
       this.setLandScapeMode()
     })
+  },
+  watch: {
+    $route(to, from) {
+      this.setLandScapeMode()
+    },
   },
 }
 </script>
