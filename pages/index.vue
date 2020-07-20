@@ -25,21 +25,4 @@ export default {
   },
 }
 </script>
-<style scoped>
-.bg {
-  background-image: url('/carbon.jpg');
-  background-repeat: repeat;
-}
-
-.touchPad {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 56px;
-  width: 100%;
-  color: thistle;
-  opacity: 0.3;
-  /* background-color: red; */
-}
-</style>
+<style scoped></style>

@@ -10,18 +10,29 @@
       autocapitalize="none"
       class="keyInput"
     ></v-textarea>
+    <client-only placeholder="Loading...">
+      <SimpleKeyboard
+        @onChange="onChange"
+        @onKeyPress="onKeyPress"
+        :input="input"
+        :theme="'hg-theme-default myTheme1'"
+      />
+    </client-only>
   </v-container>
 </template>
 
 <script>
 import axios from 'axios'
 import tool from '~/tools/key'
+import SimpleKeyboard from '~/components/SimpleKeyboard'
 
 var getKeyCode = function (str) {
   return str.charCodeAt(str.length - 1)
 }
 export default {
-  components: {},
+  components: {
+    SimpleKeyboard,
+  },
   data: () => ({
     input: '',
     lastLength: 0,
@@ -43,6 +54,15 @@ export default {
     setInputFocus() {
       this.$nextTick(() => this.$refs.input.focus())
     },
+    onChange(input) {
+      // this.input = input;
+    },
+    onKeyPress(button) {
+      console.log('button', button)
+    },
+    onInputChange(input) {
+      // this.input = input.target.value;
+    },
   },
   mounted() {
     this.input = ''
@@ -51,4 +71,52 @@ export default {
   },
 }
 </script>
-<style scoped></style>
+<style scoped>
+/deep/ .simple-keyboard {
+  max-width: 850px;
+}
+
+/*
+  Theme: myTheme1
+*/
+/deep/ .simple-keyboard.myTheme1 {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+/deep/ .simple-keyboard.myTheme1 .hg-button {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+/deep/ .simple-keyboard.myTheme1 .hg-button:active {
+  background: #1c4995;
+  color: white;
+}
+
+/deep/ #root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
+  background: #1c4995;
+}
+.bg {
+  background-image: url('/carbon.jpg');
+  background-repeat: repeat;
+}
+
+.touchPad {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 56px;
+  width: 100%;
+  color: thistle;
+  opacity: 0.3;
+  /* background-color: red; */
+}
+</style>
