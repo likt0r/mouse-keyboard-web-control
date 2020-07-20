@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height" fluid>
+  <v-container class="fill-height pa-0 align-end" fluid>
     <!-- <v-textarea
       outlined
       name="input-7-4"
@@ -11,7 +11,12 @@
       class="keyInput"
     ></v-textarea>-->
     <client-only placeholder="Loading...">
-      <SimpleKeyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="input" :theme="theme" />
+      <SimpleKeyboard
+        @onChange="onChange"
+        @onKeyPress="onKeyPress"
+        :input="input"
+        :theme="theme"
+      />
     </client-only>
   </v-container>
 </template>
@@ -31,7 +36,7 @@ export default {
   data: () => ({
     input: '',
     lastLength: 0,
-     theme: "hg-theme-default myTheme1"
+    theme: 'hg-theme-default myTheme1',
   }),
   methods: {
     onKeyPress(e) {
@@ -64,52 +69,62 @@ export default {
   },
 }
 </script>
-<style >
-.simple-keyboard {
-	max-width: 850px;
+<style>
+:root {
+  --primary: #4caf50;
+  --secondary: #8bc34a;
 }
 
 /*
   Theme: myTheme1
 */
 .simple-keyboard.myTheme1 {
-	background-color: rgba(0, 0, 0, 0.8);
-	border-radius: 0;
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
+  background-color: #2e2e2e;
+
+  border-radius: 0px;
+  padding: 0px;
+  padding-top: 10px;
+}
+.simple-keyboard.myTheme1 .hg-row {
+  margin-bottom: 0px !important;
 }
 
 .simple-keyboard.myTheme1 .hg-button {
-	height: 50px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: rgba(0, 0, 0, 0.5);
-	color: white;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2e2e2e;
+  border: 0px solid var(--secondary);
+  border-radius: 0px;
+  color: var(--primary);
+  margin-right: 0px !important;
 }
 
 .simple-keyboard.myTheme1 .hg-button:active {
-	background: #1c4995;
-	color: white;
+  margin-top: -25px;
+  height: 75px;
+  background: var(--secondary);
+  color: white;
 }
 
 #root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
-	background: #1c4995;
+  background: #1c4995;
 }
 .bg {
-	background-image: url('/carbon.jpg');
-	background-repeat: repeat;
+  background-image: url('/carbon.jpg');
+  background-repeat: repeat;
 }
 
 .touchPad {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 56px;
-	width: 100%;
-	color: thistle;
-	opacity: 0.3;
-	/* background-color: red; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 56px;
+  width: 100%;
+  color: thistle;
+  opacity: 0.3;
+  /* background-color: red; */
 }
 </style>
