@@ -87,7 +87,7 @@ export default {
 
   border-radius: 0px;
   padding: 0px;
-  padding-top: 25px;
+  padding-top: 50px;
 }
 .simple-keyboard.myTheme1 .hg-row {
   margin-bottom: 0px !important;
@@ -106,11 +106,11 @@ export default {
 }
 
 .simple-keyboard.myTheme1 .hg-button:active {
-  margin-top: -25px;
-  height: 75px;
+  margin-top: -50px;
+  align-items: flex-start;
+  height: 100px;
   background: var(--secondary);
   color: white;
-
   font-size: 18px;
 }
 
