@@ -29,24 +29,63 @@ export default {
         layoutName: 'default',
         layout: {
           default: [
+            '1 2 3 4 5 6 7 8 9 0',
             'q w e r t y u i o p',
-            'a s d f g h j k l',
+            '{tab} a s d f g h j k l',
             '{shift} z x c v b n m {backspace}',
-            '{numbers} {space} {ent}',
+            '{numbers} {spc} {space} {ent}',
           ],
           shift: [
+            '! " § $ % & / ( ) =',
             'Q W E R T Y U I O P',
-            'A S D F G H J K L',
+            '{tab} A S D F G H J K L',
             '{shift} Z X C V B N M {backspace}',
-            '{numbers} {space} {ent}',
+            '{numbers} {spc} {space} {ent}',
           ],
-          numbers: ['1 2 3', '4 5 6', '7 8 9', '{abc} 0 {backspace}'],
+          spc: [
+            '′ ` ´ ’ ^ ¸ ° ˝ _',
+            '\\ ¨ ~ ^ | · … – -',
+            "? Ü Ö Ä * ' > ; :",
+            'ß ü ö ä + # < , .',
+            '{numbers} {abc} {space} {ent}',
+          ],
+          fn: [
+            '{f7} {f8} {f9} {f10} {f11} {f12}',
+            '{f1} {f2} {f3} {f4} {f5} {f6}',
+            '{enfg} {entf} {pos1} {ende} {bUp} {bDown}',
+          ],
+          numbers: [
+            '/ * + -',
+            '7 8 9 :',
+            '4 5 6 .',
+            '1 2 3 ,',
+            '{abc} 0 {entf} {backspace}',
+          ],
         },
         display: {
+          '{entf}': 'entf',
+          '{entf}': 'enfg',
+          '{pos1}': 'pos1',
+          '{ende}': 'ende',
+          '{bUp}': 'BILD↑',
+          '{bDown}': 'BILD↓',
+          '{f1}': 'f1',
+          '{f2}': 'f2',
+          '{f3}': 'f3',
+          '{f4}': 'f4',
+          '{f5}': 'f5',
+          '{f6}': 'f6',
+          '{f7}': 'f7',
+          '{f8}': 'f8',
+          '{f9}': 'f9',
+          '{f10}': 'f10',
+          '{f11}': 'f11',
+          '{f12}': 'f12',
+          '{spc}': 'ä?.',
           '{numbers}': '123',
-          '{ent}': 'return',
+          '{ent}': '↩',
           '{escape}': 'esc ⎋',
-          '{tab}': 'tab ⇥',
+          '{tab}': '⇥',
           '{backspace}': '⌫',
           '{capslock}': 'caps lock ⇪',
           '{shift}': '⇧',
@@ -56,7 +95,7 @@ export default {
           '{altright}': 'alt ⌥',
           '{metaleft}': 'cmd ⌘',
           '{metaright}': 'cmd ⌘',
-          '{abc}': 'ABC',
+          '{abc}': 'abc',
         },
       })
     }
@@ -71,8 +110,14 @@ export default {
        * If you want to handle the shift and caps lock buttons
        */
       if (button === '{shift}' || button === '{lock}') this.handleShift()
-      if (button === '{numbers}' || button === '{abc}') this.handleNumbers()
+      if (button === '{numbers}') this.handleNumbers()
+      if (button === '{spc}') this.handleSpecialChars()
+      if (button === '{abc}')
+        this.keyboard.setOptions({
+          layoutName: 'default',
+        })
     },
+
     handleShift() {
       let currentLayout = this.keyboard.options.layoutName
       let shiftToggle = currentLayout === 'default' ? 'shift' : 'default'
@@ -86,6 +131,14 @@ export default {
 
       this.keyboard.setOptions({
         layoutName: numbersToggle,
+      })
+    },
+    handleSpecialChars() {
+      let currentLayout = this.keyboard.options.layoutName
+      let toggle = currentLayout !== 'spc' ? 'spc' : 'default'
+
+      this.keyboard.setOptions({
+        layoutName: toggle,
       })
     },
   },

@@ -105,6 +105,13 @@ export default {
   margin-right: 0px !important;
 }
 
+.simple-keyboard.myTheme1 .hg-button[data-skbtn='{space}'] {
+  flex-grow: 10;
+}
+.simple-keyboard.myTheme1 .hg-button[data-skbtn='{ent}'] {
+  flex-grow: 5;
+}
+
 .simple-keyboard.myTheme1 .hg-button:active {
   margin-top: -50px;
   align-items: flex-start;
