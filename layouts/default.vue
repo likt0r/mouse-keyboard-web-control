@@ -35,9 +35,7 @@
     </v-navigation-drawer>
 
     <v-main :style="uiLandscape ? 'padding-left: 56px' : ''">
-      <v-container fluid>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-main>
   </v-app>
 </template>

@@ -1,5 +1,8 @@
 <template>
-  <v-container class="fill-height">
+  <v-container class="fill-height" row wrap align-center>
+    <v-flex class="justify-center">
+      <v-img src="mouse.png" contain max></v-img>
+    </v-flex>
     <TouchPad
       class="touchPad bg"
       :style="`left: ${uiLandscape ? '56px' : '0px'}; bottom: ${
@@ -10,13 +13,11 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
 import TouchPad from '~/components/TouchPad.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
-    Logo,
     TouchPad,
   },
   computed: {
@@ -26,7 +27,7 @@ export default {
 </script>
 <style scoped>
 .bg {
-  background-image: url('~@/assets/carbon.jpg');
+  background-image: url('/carbon.jpg');
   background-repeat: repeat;
 }
 
