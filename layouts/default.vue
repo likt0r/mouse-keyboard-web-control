@@ -34,7 +34,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-main :style="uiLandscape ? 'padding-left: 56px' : ''">
+    <v-main class="bg" :style="uiLandscape ? 'padding-left: 56px' : ''">
       <nuxt />
     </v-main>
   </v-app>
@@ -111,3 +111,9 @@ export default {
   },
 }
 </script>
+<style scoped>
+.bg {
+  background-image: url('/carbon.jpg');
+  background-repeat: repeat;
+}
+</style>

@@ -1,8 +1,17 @@
 <template>
-  <v-container class="fill-height" row wrap align-center>
-    <v-flex class="justify-center">
-      <v-img src="mouse.png" contain max></v-img>
-    </v-flex>
+  <v-container
+    class="fill-height pa-0 ma-0 align-center justify-center"
+    row
+    wrap
+    align-center
+  >
+    <v-img
+      src="mouse.png"
+      contain
+      max-width="50vh"
+      style="opacity: 0.15;}"
+    ></v-img>
+
     <TouchPad
       class="touchPad bg"
       :style="`left: ${uiLandscape ? '56px' : '0px'}; bottom: ${

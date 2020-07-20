@@ -71,19 +71,23 @@ export default {
 </script>
 <style>
 :root {
-  --primary: #4caf50;
-  --secondary: #8bc34a;
+  --primary: rgba(255, 255, 255, 0.7);
+  --secondary: #4caf50;
+}
+
+.simple-keyboard {
+  max-width: 850px;
 }
 
 /*
   Theme: myTheme1
 */
 .simple-keyboard.myTheme1 {
-  background-color: #2e2e2e;
+  background-color: transparent;
 
   border-radius: 0px;
   padding: 0px;
-  padding-top: 10px;
+  padding-top: 25px;
 }
 .simple-keyboard.myTheme1 .hg-row {
   margin-bottom: 0px !important;
@@ -106,14 +110,12 @@ export default {
   height: 75px;
   background: var(--secondary);
   color: white;
+
+  font-size: 18px;
 }
 
 #root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
   background: #1c4995;
-}
-.bg {
-  background-image: url('/carbon.jpg');
-  background-repeat: repeat;
 }
 
 .touchPad {
