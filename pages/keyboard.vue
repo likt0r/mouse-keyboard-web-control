@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height" fluid>
-    <v-textarea
+    <!-- <v-textarea
       outlined
       name="input-7-4"
       ref="input"
@@ -9,14 +9,9 @@
       v-model="input"
       autocapitalize="none"
       class="keyInput"
-    ></v-textarea>
+    ></v-textarea>-->
     <client-only placeholder="Loading...">
-      <SimpleKeyboard
-        @onChange="onChange"
-        @onKeyPress="onKeyPress"
-        :input="input"
-        :theme="'hg-theme-default myTheme1'"
-      />
+      <SimpleKeyboard @onChange="onChange" @onKeyPress="onKeyPress" :input="input" :theme="theme" />
     </client-only>
   </v-container>
 </template>
@@ -36,6 +31,7 @@ export default {
   data: () => ({
     input: '',
     lastLength: 0,
+     theme: "hg-theme-default myTheme1"
   }),
   methods: {
     onKeyPress(e) {
@@ -51,9 +47,7 @@ export default {
       //   code: tool.toHexCode(kCd),
       // })
     },
-    setInputFocus() {
-      this.$nextTick(() => this.$refs.input.focus())
-    },
+
     onChange(input) {
       // this.input = input;
     },
@@ -67,56 +61,55 @@ export default {
   mounted() {
     this.input = ''
     this.lastLength = 0
-    this.setInputFocus()
   },
 }
 </script>
-<style scoped>
-/deep/ .simple-keyboard {
-  max-width: 850px;
+<style >
+.simple-keyboard {
+	max-width: 850px;
 }
 
 /*
   Theme: myTheme1
 */
-/deep/ .simple-keyboard.myTheme1 {
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 0;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
+.simple-keyboard.myTheme1 {
+	background-color: rgba(0, 0, 0, 0.8);
+	border-radius: 0;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
 }
 
-/deep/ .simple-keyboard.myTheme1 .hg-button {
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
+.simple-keyboard.myTheme1 .hg-button {
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
 }
 
-/deep/ .simple-keyboard.myTheme1 .hg-button:active {
-  background: #1c4995;
-  color: white;
+.simple-keyboard.myTheme1 .hg-button:active {
+	background: #1c4995;
+	color: white;
 }
 
-/deep/ #root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
-  background: #1c4995;
+#root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
+	background: #1c4995;
 }
 .bg {
-  background-image: url('/carbon.jpg');
-  background-repeat: repeat;
+	background-image: url('/carbon.jpg');
+	background-repeat: repeat;
 }
 
 .touchPad {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 56px;
-  width: 100%;
-  color: thistle;
-  opacity: 0.3;
-  /* background-color: red; */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 56px;
+	width: 100%;
+	color: thistle;
+	opacity: 0.3;
+	/* background-color: red; */
 }
 </style>

@@ -14,6 +14,7 @@ export default {
     input: {
       type: String,
     },
+    theme: String,
   },
   data: () => ({
     keyboard: null,
@@ -21,12 +22,14 @@ export default {
   async mounted() {
     if (process.client) {
       this.keyboard = new (await import('simple-keyboard')).default({
+        theme: this.theme,
         onChange: this.onChange,
         onKeyPress: this.onKeyPress,
         mergeDisplay: true,
         layoutName: 'default',
         layout: {
           default: [
+             '1 2 3 4 5 6 7 8 9 0',
             'q w e r t y u i o p',
             'a s d f g h j k l',
             '{shift} z x c v b n m {backspace}',
@@ -80,7 +83,7 @@ export default {
   },
   watch: {
     input(input) {
-      this.keyboard.setInput(input)
+     // this.keyboard.setInput(input)
     },
   },
 }
