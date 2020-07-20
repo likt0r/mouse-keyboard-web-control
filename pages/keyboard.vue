@@ -111,7 +111,7 @@ export default {
   height: 100px;
   background: var(--secondary);
   color: white;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 #root .simple-keyboard.myTheme1 + .simple-keyboard-preview {

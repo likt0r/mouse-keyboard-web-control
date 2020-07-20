@@ -10,6 +10,7 @@
     <v-navigation-drawer
       v-if="uiLandscape"
       dark
+      right
       mini-variant
       mini-variant-width="56"
       permanent
@@ -34,7 +35,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-main class="bg" :style="uiLandscape ? 'padding-left: 56px' : ''">
+    <v-main class="bg" :style="uiLandscape ? 'padding-right: 56px' : ''">
       <nuxt />
     </v-main>
   </v-app>
@@ -79,7 +80,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'Wireless Keyboard',
     }
   },
   computed: {
@@ -93,8 +94,7 @@ export default {
     setLandScapeMode() {
       this.setUiLandscape(
         document.documentElement.clientWidth >
-          document.documentElement.clientHeight &&
-          this.$route.name !== 'keyboard'
+          document.documentElement.clientHeight
       )
     },
   },

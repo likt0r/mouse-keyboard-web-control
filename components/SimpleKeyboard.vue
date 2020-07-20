@@ -71,12 +71,21 @@ export default {
        * If you want to handle the shift and caps lock buttons
        */
       if (button === '{shift}' || button === '{lock}') this.handleShift()
+      if (button === '{numbers}' || button === '{abc}') this.handleNumbers()
     },
     handleShift() {
       let currentLayout = this.keyboard.options.layoutName
       let shiftToggle = currentLayout === 'default' ? 'shift' : 'default'
       this.keyboard.setOptions({
         layoutName: shiftToggle,
+      })
+    },
+    handleNumbers() {
+      let currentLayout = this.keyboard.options.layoutName
+      let numbersToggle = currentLayout !== 'numbers' ? 'numbers' : 'default'
+
+      this.keyboard.setOptions({
+        layoutName: numbersToggle,
       })
     },
   },
