@@ -45,7 +45,7 @@ export default {
 
       // mouse down when second finger on screen
       if (this.pointerOnScreen === 2) {
-        this.$axios.post('/api/mouse/mouse-down1', {
+        this.$axios.post('/api/mouse/mouse-down', {
           button: 'left',
         })
       }

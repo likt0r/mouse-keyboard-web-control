@@ -1,7 +1,7 @@
 <template>
   <v-app @resize="resize">
     <SnackBar />
-    <v-bottom-navigation v-if="!uiLandscape" dark app fixed router>
+    <v-bottom-navigation v-if="!uiLandscape" dark app absolute router>
       <v-btn v-for="button in buttons" :key="button.title" :to="button.to">
         <!-- <span>{{ button.title }}</span> -->
         <v-icon>{{ button.icon }}</v-icon>
@@ -15,7 +15,6 @@
       mini-variant
       mini-variant-width="56"
       permanent
-      stateless
       fixed
       mandatory
     >
@@ -36,7 +35,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-main class="bg" :style="uiLandscape ? 'padding-right: 56px' : ''">
+    <v-main :class="`bg ${uiLandscape ? 'landscape' : 'portrait'}`">
       <nuxt />
     </v-main>
   </v-app>
@@ -116,6 +115,21 @@ export default {
 <style scoped>
 .bg {
   background-image: url('/carbon.jpg');
-  background-repeat: cover;
+  background-repeat: repeat;
+}
+.portrait {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 56px);
+  padding: 0 !important;
+}
+.landscape {
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: calc(100% - 56px);
+  height: 100%;
 }
 </style>

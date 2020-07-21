@@ -1,6 +1,7 @@
 <template>
   <v-container
     class="fill-height pa-0 align-center justify-end flex-column"
+    overflow-hidden
     fluid
     ref="cont"
   >
@@ -16,17 +17,11 @@
     ></v-textarea>-->
 
     <TouchPad
-      v-if="!uiLandscape"
       class="touchPad align-self-auto align-content-stretch"
-      :style="`width: 100%; height:${touchPadHeight}px;`"
+      :style="`width: 100%; flex:1`"
     />
     <client-only>
-      <SimpleKeyboard
-        ref="keyboard"
-        @layoutChanged="setTouchPadHeight()"
-        @keyCode="onKeyPressed"
-        :theme="theme"
-      />
+      <SimpleKeyboard ref="keyboard" @keyCode="onKeyPressed" :theme="theme" />
     </client-only>
   </v-container>
 </template>
@@ -55,25 +50,10 @@ export default {
   methods: {
     onKeyPressed(keyCode) {
       try {
-        this.$axios.post('/api/keyboard/key2', {
+        this.$axios.post('/api/keyboard/key', {
           code: tool.toHexCode(keyCode),
         })
       } catch (error) {}
-    },
-    setTouchPadHeight() {
-      if (!this.uiLandscape) {
-        this.touchPadHeight =
-          this.$refs.keyboard.$el.parentNode.offsetHeight -
-          this.$refs.keyboard.$el.clientHeight
-      }
-    },
-  },
-  watch: {
-    uiLandscape(uiLandscape) {
-      if (uiLandscape) this.touchPadHeight = 0
-      else {
-        this.$nextTick(() => this.setTouchPadHeight())
-      }
     },
   },
   mounted() {
