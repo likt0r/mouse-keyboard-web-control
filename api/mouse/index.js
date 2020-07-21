@@ -1,9 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const { exec } = require('child_process')
+const cors = require('cors')
 const app = express()
 
 const refreshTokens = []
+app.use(cors())
 app.use(bodyParser.json())
 
 app.post('/move', function (req, res) {
