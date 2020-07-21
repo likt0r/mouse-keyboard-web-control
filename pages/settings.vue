@@ -67,11 +67,9 @@ export default {
   },
   watch: {
     speed(newVal) {
-      console.log('Speed', newVal)
       this.setTouchSpeed(newVal / 10)
     },
     accel(newVal) {
-      console.log('accel', newVal)
       this.setTouchAccel(newVal / 100)
     },
   },

@@ -89,9 +89,7 @@ export default {
   },
   methods: {
     ...mapActions({ setUiLandscape: 'device/setUiLandscape' }),
-    resize(event) {
-      console.log(event)
-    },
+    resize(event) {},
     setLandScapeMode() {
       this.setUiLandscape(
         document.documentElement.clientWidth >
