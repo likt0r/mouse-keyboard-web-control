@@ -5,7 +5,7 @@
     wrap
     align-center
   >
-    <TouchPad class="touchPad bg" :style="`width: 100%; height: 100%;`" />
+    <TouchPad class="touchPad" :style="`width: 100%; height: 100%;`" />
   </v-container>
 </template>
 

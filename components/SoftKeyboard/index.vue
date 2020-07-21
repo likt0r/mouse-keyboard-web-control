@@ -1,5 +1,8 @@
 <template>
-  <div :class="keyboardClass"></div>
+  <div
+    :class="keyboardClass"
+    :style="buttonPressed ? 'padding-top: 50px' : ''"
+  ></div>
 </template>
 
 <script>
@@ -21,22 +24,12 @@ export default {
     theme: String,
   },
   data: () => ({
+    buttonPressed: false,
     keyboard: null,
   }),
-  async mounted() {
-    if (process.client) {
-      this.keyboard = new (await import('simple-keyboard')).default({
-        theme: this.theme,
-        onKeyReleased: this.onKeyReleased,
-        mergeDisplay: true,
-        layoutName: 'default',
-        layout,
-        display,
-      })
-    }
-  },
   methods: {
     onKeyReleased(button) {
+      this.buttonPressed = false
       if (button === '{shift}') {
         return this.handleShift()
       }
@@ -50,7 +43,10 @@ export default {
           ? tools.KEY_MAP[button.slice(1, button.length - 1)]
           : button.charCodeAt(0)
 
-      this.$emit('key', { char: button, code, hex: tools.toHexCode(code) })
+      this.$emit('key', code)
+    },
+    onKeyPress(button) {
+      this.buttonPressed = true
     },
 
     handleShift() {
@@ -61,11 +57,26 @@ export default {
       })
     },
   },
+  async mounted() {
+    if (process.client) {
+      this.keyboard = new (await import('simple-keyboard')).default({
+        theme: this.theme,
+        onKeyReleased: this.onKeyReleased,
+        onKeyPress: this.onKeyPress,
+        mergeDisplay: true,
+        layoutName: 'default',
+        layout,
+        display,
+      })
+    }
+  },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.keybPadding {
+}
 .simple-keyboard {
   max-width: 850px;
   --primary: rgba(255, 255, 255, 0.7);
@@ -80,7 +91,6 @@ export default {
 
   border-radius: 0px;
   padding: 0px;
-  padding-top: 50px;
 }
 .simple-keyboard.greenDark .hg-row {
   margin-bottom: 0px !important;

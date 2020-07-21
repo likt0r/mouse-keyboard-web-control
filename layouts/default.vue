@@ -1,7 +1,7 @@
 <template>
   <v-app @resize="resize">
     <SnackBar />
-    <v-bottom-navigation v-if="!uiLandscape" dark app absolute router>
+    <v-bottom-navigation v-if="!uiLandscape" dark app fixed router>
       <v-btn v-for="button in buttons" :key="button.title" :to="button.to">
         <!-- <span>{{ button.title }}</span> -->
         <v-icon>{{ button.icon }}</v-icon>
