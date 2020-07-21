@@ -10,6 +10,7 @@
 import axios from 'axios'
 import tools from '~/tools/touch'
 import requestThrottel from '~/tools/requestThrottel'
+import { mapState, mapActions } from 'vuex'
 
 let oldPosX = 0
 let oldPosY = 0
@@ -26,10 +27,16 @@ export default {
       isClick: false,
       isClickCancelDistance: 10, // If pointer moves more than 60px await from start is not a click
       moveThrottel: null,
-      speed: 2,
       wheelThreshold: 25,
     }
   },
+  computed: {
+    ...mapState({
+      touchAccel: (state) => state.settings.touchAccel,
+      touchSpeed: (state) => state.settings.touchSpeed,
+    }),
+  },
+
   methods: {
     touchStart(event) {
       console.log('Touch Start')
@@ -59,10 +66,18 @@ export default {
     async touchMove(event) {
       if (this.pointerOnScreen <= 2) {
         // move mouse cursor only with one finger
-        this.moveThrottel.send({
+        let delta = {
           x: event.touches[0].clientX - oldPosX,
           y: event.touches[0].clientY - oldPosY,
-        })
+        }
+        console.log('before trans', delta)
+        delta = tools.cartesian2polar(delta)
+        console.log('polar', delta)
+        delta.r = Math.pow(delta.r, this.touchAccel) * this.touchSpeed
+        console.log('after trans', delta)
+        delta = tools.polar2cartesian(delta)
+        console.log('in cart', delta)
+        this.moveThrottel.send(delta)
       }
       // Three fingers Mouse wheel simualtion
       if (this.pointerOnScreen === 3) {
@@ -141,8 +156,8 @@ export default {
       },
       (data) => {
         return {
-          x: Math.round(data.x * this.speed),
-          y: Math.round(data.y * this.speed),
+          x: Math.round(data.x),
+          y: Math.round(data.y),
         }
       }
     )

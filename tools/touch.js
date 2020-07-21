@@ -19,4 +19,16 @@ export default {
     console.log('distance', result)
     return result
   },
+  polar2cartesian({ r, theta }) {
+    return {
+      x: r * Math.cos(theta),
+      y: r * Math.sin(theta),
+    }
+  },
+  cartesian2polar({ x, y }) {
+    return {
+      r: Math.sqrt(x * x + y * y),
+      theta: Math.atan2(y, x),
+    }
+  },
 }
