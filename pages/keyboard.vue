@@ -39,9 +39,9 @@ export default {
   }),
   methods: {
     onKey(code) {
-      console.log('onKEyx')
+      console.log('onKey ', code)
       this.$axios.post('/api/keyboard/key', {
-        code: code,
+        code,
       })
     },
   },

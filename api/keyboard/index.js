@@ -8,8 +8,9 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.post('/key', function (req, res) {
+  console.log('key ', req.body)
   const { code } = req.body
-
+  console.log('key ', code)
   if (typeof code !== 'number') {
     res.status(500)
   } else {

@@ -7,7 +7,7 @@
 
 <script>
 import 'simple-keyboard/build/css/index.css'
-import tools from './tools'
+import KEY_MAP from './keyMap'
 import display from './display'
 import layout from './layout'
 
@@ -29,6 +29,7 @@ export default {
   }),
   methods: {
     onKeyReleased(button) {
+      console.log('pressedButton b', button)
       this.buttonPressed = false
       if (button === '{shift}') {
         return this.handleShift()
@@ -40,9 +41,9 @@ export default {
       }
       const code =
         button.length > 1
-          ? tools.KEY_MAP[button.slice(1, button.length - 1)]
+          ? KEY_MAP[button.slice(1, button.length - 1)]
           : button.charCodeAt(0)
-
+      console.log('pressedButton C', code)
       this.$emit('key', code)
     },
     onKeyPress(button) {
@@ -75,8 +76,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.keybPadding {
-}
 .simple-keyboard {
   max-width: 850px;
   --primary: rgba(255, 255, 255, 0.7);
