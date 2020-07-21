@@ -1,6 +1,6 @@
 <template>
   <v-container
-    class="fill-height pa-0 align-end justify-end flex-column"
+    class="fill-height pa-0 align-center justify-end flex-column"
     fluid
     ref="cont"
   >
@@ -33,7 +33,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import axios from 'axios'
 import tool from '~/tools/key'
 import SimpleKeyboard from '~/components/SimpleKeyboard'
 
@@ -55,9 +54,11 @@ export default {
   },
   methods: {
     onKeyPressed(keyCode) {
-      axios.post('/api/keyboard/key', {
-        code: tool.toHexCode(keyCode),
-      })
+      try {
+        this.$axios.post('/api/keyboard/key2', {
+          code: tool.toHexCode(keyCode),
+        })
+      } catch (error) {}
     },
     setTouchPadHeight() {
       if (!this.uiLandscape) {

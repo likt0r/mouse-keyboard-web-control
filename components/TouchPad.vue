@@ -45,12 +45,12 @@ export default {
 
       // mouse down when second finger on screen
       if (this.pointerOnScreen === 2) {
-        axios.post('/api/mouse/mouse-down', {
+        this.$axios.post('/api/mouse/mouse-down1', {
           button: 'left',
         })
       }
       if (this.pointerOnScreen === 3) {
-        axios.post('/api/mouse/mouse-up', {
+        this.$axios.post('/api/mouse/mouse-up', {
           button: 'left',
         })
       }
@@ -70,12 +70,12 @@ export default {
         if (Math.abs(scrollWheelAccumulator) > this.wheelThreshold) {
           if (Math.sign(scrollWheelAccumulator) > 0) {
             scrollWheelAccumulator -= this.wheelThreshold
-            axios.post('/api/mouse/wheel', {
+            this.$axios.post('/api/mouse/wheel', {
               direction: 'up',
             })
           } else {
             scrollWheelAccumulator += this.wheelThreshold
-            axios.post('/api/mouse/wheel', {
+            this.$axios.post('/api/mouse/wheel', {
               direction: 'down',
             })
           }
@@ -95,7 +95,7 @@ export default {
             this.isClickCancelDistance
         ) {
           // 1 touch is left, 2 touch is right, 3 touches is middle
-          axios.post('/api/mouse/click', {
+          this.$axios.post('/api/mouse/click', {
             button: tools.getMouseButtonName(event.touches.length),
           })
         }
@@ -103,7 +103,7 @@ export default {
       }
       // mouse up when second finger leaves screen
       if (this.pointerOnScreen === 1) {
-        axios.post('/api/mouse/mouse-up', {
+        this.$axios.post('/api/mouse/mouse-up', {
           button: 'left',
         })
       }
@@ -111,7 +111,7 @@ export default {
       if (this.pointerOnScreen === 2) {
         this.scrollWheelAccumulator = 0
         if (this.pointerOnScreen === 3) {
-          axios.post('/api/mouse/mouse-down', {
+          this.$axios.post('/api/mouse/mouse-down', {
             button: 'left',
           })
         }
@@ -124,6 +124,7 @@ export default {
   },
   beforeMount() {
     this.moveThrottel = requestThrottel(
+      this.$axios,
       '/api/mouse/move',
       function (pipeline) {
         return pipeline.reduce(

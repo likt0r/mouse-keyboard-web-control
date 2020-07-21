@@ -124,6 +124,10 @@ export default {
         return this.$emit('layoutChanged')
       }
 
+      console.log(
+        'Key map error' + button + ': ',
+        tools.KEY_MAP[button.slice(1, button.length - 1)]
+      )
       const keyCode =
         button.length > 1
           ? tools.KEY_MAP[button.slice(1, button.length - 1)]

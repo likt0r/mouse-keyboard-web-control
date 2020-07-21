@@ -5,6 +5,7 @@ export default {
     return template.slice(0, 6 - Math.min(hex.length, 4)).concat(hex)
   },
   KEY_MAP: {
+    backspace: 8,
     enter: 13,
     space: 32,
     tab: 9,

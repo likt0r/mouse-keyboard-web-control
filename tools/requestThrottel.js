@@ -1,5 +1,9 @@
-import axios from 'axios'
-export default function factory(url, dataAccumulator, preSendAlteration) {
+export default function factory(
+  axios,
+  url,
+  dataAccumulator,
+  preSendAlteration
+) {
   let dataPipeline = []
   let pending = false
   let _preSendAlteration = preSendAlteration

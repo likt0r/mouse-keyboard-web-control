@@ -1,5 +1,6 @@
 <template>
-  <v-app dark @resize="resize">
+  <v-app @resize="resize">
+    <SnackBar />
     <v-bottom-navigation v-if="!uiLandscape" dark app fixed router>
       <v-btn v-for="button in buttons" :key="button.title" :to="button.to">
         <!-- <span>{{ button.title }}</span> -->
@@ -43,6 +44,7 @@
 
 <script>
 import TouchPad from '~/components/TouchPad.vue'
+import SnackBar from '~/components/SnackBar.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -114,6 +116,6 @@ export default {
 <style scoped>
 .bg {
   background-image: url('/carbon.jpg');
-  background-repeat: repeat;
+  background-repeat: cover;
 }
 </style>
