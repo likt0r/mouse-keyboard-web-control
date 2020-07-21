@@ -6,7 +6,7 @@ export default {
   audioDown: 182,
   audioMute: 181,
   audioUp: 183,
-  begin: 65368,
+  home: 65360,
   backspace: 65288,
   delete: 65535,
   end: 65367,
