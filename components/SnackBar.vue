@@ -1,18 +1,18 @@
 <template>
-  <div class="text-center ma-2">
-    <v-snackbar
-      v-model="show"
-      top
-      :timeout="5555555555"
-      :color="snackbar && snackbar.color"
-    >
-      {{ snackbar && snackbar.message }}
+  <v-snackbar
+    v-model="show"
+    top
+    :timeout="snackbar && snackbar.timeout"
+    :color="snackbar && snackbar.color"
+  >
+    {{ snackbar && snackbar.message }}
 
-      <v-btn text @click="show = false">
-        close
+    <template v-slot:action="{ attrs }">
+      <v-btn text v-bind="attrs" @click="show = false">
+        Close
       </v-btn>
-    </v-snackbar>
-  </div>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -38,5 +38,3 @@ export default {
   methods: {},
 }
 </script>
-justify-content: space-between; display: flex; align-content: center;
-text-align: center; align-items: stretch; }
