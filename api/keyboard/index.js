@@ -9,11 +9,20 @@ app.use(bodyParser.json())
 
 app.post('/key', function (req, res) {
   const { code } = req.body
-  exec(`xdotool key "${code}"`)
+
+  if (typeof code !== 'number') {
+    res.status(500)
+  } else {
+    exec(`xdotool key "${toHexCode(code)}"`)
+  }
 
   res.end()
 })
-
+function toHexCode(number) {
+  let template = '0x0000'
+  let hex = number.toString(16)
+  return template.slice(0, 6 - Math.min(hex.length, 4)).concat(hex)
+}
 module.exports = {
   path: '/api/keyboard',
   handler: app,
