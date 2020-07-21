@@ -26,6 +26,13 @@ app.post('/click', function (req, res) {
   if (button === 'middle') exec(`xdotool click ${2}`)
   res.end()
 })
+app.post('/wheel', function (req, res) {
+  const { direction } = req.body
+  console.log('/wheel ', direction)
+  if (direction === 'up') exec(`xdotool click ${4}`)
+  if (direction === 'down') exec(`xdotool click ${5}`)
+  res.end()
+})
 
 app.post('/mouse-down', function (req, res) {
   const { button } = req.body

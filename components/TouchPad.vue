@@ -9,7 +9,6 @@
 <script>
 import axios from 'axios'
 import tools from '~/tools/touch'
-
 import requestThrottel from '~/tools/requestThrottel'
 
 let oldPosX = 0
@@ -17,7 +16,7 @@ let oldPosY = 0
 let startPosX = 0
 let startPosY = 0
 let isClickTimeout
-
+let scrollWheelAccumulator = 0
 export default {
   data() {
     return {
@@ -28,6 +27,7 @@ export default {
       isClickCancelDistance: 10, // If pointer moves more than 60px await from start is not a click
       moveThrottel: null,
       speed: 2,
+      wheelThreshold: 25,
     }
   },
   methods: {
@@ -49,6 +49,12 @@ export default {
           button: 'left',
         })
       }
+      if (this.pointerOnScreen === 3) {
+        axios.post('/api/mouse/mouse-up', {
+          button: 'left',
+        })
+      }
+      event.preventDefault()
     },
     async touchMove(event) {
       if (this.pointerOnScreen <= 2) {
@@ -57,6 +63,23 @@ export default {
           x: event.touches[0].clientX - oldPosX,
           y: event.touches[0].clientY - oldPosY,
         })
+      }
+      // Three fingers Mouse wheel simualtion
+      if (this.pointerOnScreen === 3) {
+        scrollWheelAccumulator += event.touches[0].clientY - oldPosY
+        if (Math.abs(scrollWheelAccumulator) > this.wheelThreshold) {
+          if (Math.sign(scrollWheelAccumulator) > 0) {
+            scrollWheelAccumulator -= this.wheelThreshold
+            axios.post('/api/mouse/wheel', {
+              direction: 'up',
+            })
+          } else {
+            scrollWheelAccumulator += this.wheelThreshold
+            axios.post('/api/mouse/wheel', {
+              direction: 'down',
+            })
+          }
+        }
       }
       oldPosX = event.touches[0].clientX
       oldPosY = event.touches[0].clientY
@@ -84,8 +107,18 @@ export default {
           button: 'left',
         })
       }
+      // third finger leaves screen reset scroll wheel accumulator
+      if (this.pointerOnScreen === 2) {
+        this.scrollWheelAccumulator = 0
+        if (this.pointerOnScreen === 3) {
+          axios.post('/api/mouse/mouse-down', {
+            button: 'left',
+          })
+        }
+      }
       this.trackPointerPosition = false
       console.log('Touch End')
+      event.preventDefault()
     },
     trackPointer() {},
   },
