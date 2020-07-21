@@ -38,10 +38,10 @@ export default {
   methods: {
     onKeyReleased(button) {
       if (button === '{shift}') {
-        this.handleShift()
+        return this.handleShift()
       }
       if (['{numbers}', '{spc}', '{default}', '{fn}'].includes(button)) {
-        this.keyboard.setOptions({
+        return this.keyboard.setOptions({
           layoutName: button.slice(1, button.length - 1),
         })
       }
