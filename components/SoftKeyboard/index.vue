@@ -110,7 +110,7 @@ export default {
 .simple-keyboard.greenDark .hg-button[data-skbtn='{space}'] {
   flex-grow: 10;
 }
-.simple-keyboard.greenDark .hg-button[data-skbtn='{ent}'] {
+.simple-keyboard.greenDark .hg-button[data-skbtn='{enter}'] {
   flex-grow: 5;
 }
 
