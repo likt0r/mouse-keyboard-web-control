@@ -114,8 +114,8 @@ export default {
 </script>
 <style scoped>
 .bg {
-  background-image: url('/carbon.jpg');
-  background-repeat: repeat;
+  background: url('/carbon.jpg') no-repeat center center;
+  background-size: cover;
 }
 .portrait {
   position: absolute;
