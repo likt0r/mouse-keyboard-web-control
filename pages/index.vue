@@ -5,19 +5,7 @@
     wrap
     align-center
   >
-    <v-img
-      src="mouse.png"
-      contain
-      max-width="50vh"
-      style="opacity: 0.15;}"
-    ></v-img>
-
-    <TouchPad
-      class="touchPad bg"
-      :style="`left: ${uiLandscape ? '56px' : '0px'}; bottom: ${
-        uiLandscape ? '0px' : '56px'
-      }`"
-    />
+    <TouchPad class="touchPad bg" :style="`width: 100%; height: 100%;`" />
   </v-container>
 </template>
 

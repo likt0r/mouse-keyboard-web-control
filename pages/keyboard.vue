@@ -1,5 +1,9 @@
 <template>
-  <v-container class="fill-height pa-0 align-end" fluid>
+  <v-container
+    class="fill-height pa-0 align-end justify-end flex-column"
+    fluid
+    ref="cont"
+  >
     <!-- <v-textarea
       outlined
       name="input-7-4"
@@ -10,11 +14,17 @@
       autocapitalize="none"
       class="keyInput"
     ></v-textarea>-->
-    <client-only placeholder="Loading...">
+
+    <TouchPad
+      v-if="!uiLandscape"
+      class="touchPad align-self-auto align-content-stretch"
+      :style="`width: 100%; height:${touchPadHeight}px;`"
+    />
+    <client-only>
       <SimpleKeyboard
-        @onChange="onChange"
-        @onKeyPress="onKeyPress"
-        :input="input"
+        ref="keyboard"
+        @layoutChanged="setTouchPadHeight()"
+        @keyCode="onKeyPressed"
         :theme="theme"
       />
     </client-only>
@@ -22,6 +32,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import axios from 'axios'
 import tool from '~/tools/key'
 import SimpleKeyboard from '~/components/SimpleKeyboard'
@@ -36,31 +47,32 @@ export default {
   data: () => ({
     input: '',
     lastLength: 0,
-    theme: 'hg-theme-default myTheme1',
+    theme: 'hg-theme-default greenDark',
+    touchPadHeight: 0,
   }),
+  computed: {
+    ...mapState({ uiLandscape: (state) => state.device.uiLandscape }),
+  },
   methods: {
-    onKeyPress(e) {
-      let kCd = e.keyCode || e.which
-      console.log(e)
-      // if (kCd == 0 || kCd == 229) {
-      //   //for android chrome keycode fix
-      //   kCd = getKeyCode(this.$refs.input.value)
-      // }
-      // // convert to hex
-      // console.log('kcfd', kCd)
-      // axios.post('/api/keyboard/key', {
-      //   code: tool.toHexCode(kCd),
-      // })
+    onKeyPressed(keyCode) {
+      axios.post('/api/keyboard/key', {
+        code: tool.toHexCode(keyCode),
+      })
     },
-
-    onChange(input) {
-      // this.input = input;
+    setTouchPadHeight() {
+      if (!this.uiLandscape) {
+        this.touchPadHeight =
+          this.$refs.keyboard.$el.parentNode.offsetHeight -
+          this.$refs.keyboard.$el.clientHeight
+      }
     },
-    onKeyPress(button) {
-      console.log('button', button)
-    },
-    onInputChange(input) {
-      // this.input = input.target.value;
+  },
+  watch: {
+    uiLandscape(uiLandscape) {
+      if (uiLandscape) this.touchPadHeight = 0
+      else {
+        this.$nextTick(() => this.setTouchPadHeight())
+      }
     },
   },
   mounted() {
@@ -80,20 +92,20 @@ export default {
 }
 
 /*
-  Theme: myTheme1
+  Theme: greenDark
 */
-.simple-keyboard.myTheme1 {
+.simple-keyboard.greenDark {
   background-color: transparent;
 
   border-radius: 0px;
   padding: 0px;
   padding-top: 50px;
 }
-.simple-keyboard.myTheme1 .hg-row {
+.simple-keyboard.greenDark .hg-row {
   margin-bottom: 0px !important;
 }
 
-.simple-keyboard.myTheme1 .hg-button {
+.simple-keyboard.greenDark .hg-button {
   height: 50px;
   display: flex;
   justify-content: center;
@@ -105,14 +117,14 @@ export default {
   margin-right: 0px !important;
 }
 
-.simple-keyboard.myTheme1 .hg-button[data-skbtn='{space}'] {
+.simple-keyboard.greenDark .hg-button[data-skbtn='{space}'] {
   flex-grow: 10;
 }
-.simple-keyboard.myTheme1 .hg-button[data-skbtn='{ent}'] {
+.simple-keyboard.greenDark .hg-button[data-skbtn='{ent}'] {
   flex-grow: 5;
 }
 
-.simple-keyboard.myTheme1 .hg-button:active {
+.simple-keyboard.greenDark .hg-button:active {
   margin-top: -50px;
   align-items: flex-start;
   height: 100px;
@@ -121,19 +133,7 @@ export default {
   font-size: 17px;
 }
 
-#root .simple-keyboard.myTheme1 + .simple-keyboard-preview {
+#root .simple-keyboard.greenDark + .simple-keyboard-preview {
   background: #1c4995;
-}
-
-.touchPad {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 56px;
-  width: 100%;
-  color: thistle;
-  opacity: 0.3;
-  /* background-color: red; */
 }
 </style>

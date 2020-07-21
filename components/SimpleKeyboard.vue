@@ -4,6 +4,7 @@
 
 <script>
 import 'simple-keyboard/build/css/index.css'
+import tools from '~/tools/key'
 export default {
   name: 'SimpleKeyboard',
   props: {
@@ -23,8 +24,7 @@ export default {
     if (process.client) {
       this.keyboard = new (await import('simple-keyboard')).default({
         theme: this.theme,
-        onChange: this.onChange,
-        onKeyPress: this.onKeyPress,
+        onKeyReleased: this.onKeyReleased,
         mergeDisplay: true,
         layoutName: 'default',
         layout: {
@@ -33,42 +33,51 @@ export default {
             'q w e r t y u i o p',
             '{tab} a s d f g h j k l',
             '{shift} z x c v b n m {backspace}',
-            '{numbers} {spc} {space} {ent}',
+            '{numbers} {spc} {fn} {space} {enter}',
+          ],
+          alt: [
+            '1 2 3 4 5 6 7 8 9 0',
+            'q w e r t y u i o p',
+            '{tab} a s d f g h j k l',
+            '{shift} z x c v b n m {backspace}',
+            '{numbers} {spc} {fn} {space} {enter}',
           ],
           shift: [
             '! " § $ % & / ( ) =',
             'Q W E R T Y U I O P',
             '{tab} A S D F G H J K L',
             '{shift} Z X C V B N M {backspace}',
-            '{numbers} {spc} {space} {ent}',
+            '{numbers} {spc} {fn} {space} {enter}',
           ],
+
           spc: [
             '′ ` ´ ’ ^ ¸ ° ˝ _',
             '\\ ¨ ~ ^ | · … – -',
             "? Ü Ö Ä * ' > ; :",
             'ß ü ö ä + # < , .',
-            '{numbers} {abc} {space} {ent}',
+            '{numbers} {default} {fn} {space} {enter}',
           ],
           fn: [
             '{f7} {f8} {f9} {f10} {f11} {f12}',
             '{f1} {f2} {f3} {f4} {f5} {f6}',
-            '{enfg} {entf} {pos1} {ende} {bUp} {bDown}',
+            '{insert} {delete} {home} {end} {pageUp} {pageDown}',
+            '{numbers} {spc} {default} {space} {enter}',
           ],
           numbers: [
             '/ * + -',
             '7 8 9 :',
             '4 5 6 .',
             '1 2 3 ,',
-            '{abc} 0 {entf} {backspace}',
+            '{default} 0 {delete} {backspace}',
           ],
         },
         display: {
-          '{entf}': 'entf',
-          '{entf}': 'enfg',
-          '{pos1}': 'pos1',
-          '{ende}': 'ende',
-          '{bUp}': 'BILD↑',
-          '{bDown}': 'BILD↓',
+          '{delete}': 'entf',
+          '{insert}': 'enfg',
+          '{home}': 'pos1',
+          '{end}': 'ende',
+          '{pageUp}': 'BILD↑',
+          '{pageDown}': 'BILD↓',
           '{f1}': 'f1',
           '{f2}': 'f2',
           '{f3}': 'f3',
@@ -83,7 +92,7 @@ export default {
           '{f12}': 'f12',
           '{spc}': 'ä?.',
           '{numbers}': '123',
-          '{ent}': '↩',
+          '{enter}': '↩',
           '{escape}': 'esc ⎋',
           '{tab}': '⇥',
           '{backspace}': '⌫',
@@ -95,27 +104,31 @@ export default {
           '{altright}': 'alt ⌥',
           '{metaleft}': 'cmd ⌘',
           '{metaright}': 'cmd ⌘',
-          '{abc}': 'abc',
+          '{default}': 'abc',
+          '{fn}': 'fn',
         },
       })
+      return this.$emit('layoutChanged')
     }
   },
   methods: {
-    onChange(input) {
-      this.$emit('onChange', input)
-    },
-    onKeyPress(button) {
-      this.$emit('onKeyPress', button)
-      /**
-       * If you want to handle the shift and caps lock buttons
-       */
-      if (button === '{shift}' || button === '{lock}') this.handleShift()
-      if (button === '{numbers}') this.handleNumbers()
-      if (button === '{spc}') this.handleSpecialChars()
-      if (button === '{abc}')
+    onKeyReleased(button) {
+      if (button === '{shift}') {
+        this.handleShift()
+        return this.$emit('layoutChanged')
+      }
+      if (['{numbers}', '{spc}', '{default}', '{fn}'].includes(button)) {
         this.keyboard.setOptions({
-          layoutName: 'default',
+          layoutName: button.slice(1, button.length - 1),
         })
+        return this.$emit('layoutChanged')
+      }
+
+      const keyCode =
+        button.length > 1
+          ? tools.KEY_MAP[button.slice(1, button.length - 1)]
+          : button.charCodeAt(0)
+      this.$emit('keyCode', keyCode)
     },
 
     handleShift() {
@@ -124,27 +137,6 @@ export default {
       this.keyboard.setOptions({
         layoutName: shiftToggle,
       })
-    },
-    handleNumbers() {
-      let currentLayout = this.keyboard.options.layoutName
-      let numbersToggle = currentLayout !== 'numbers' ? 'numbers' : 'default'
-
-      this.keyboard.setOptions({
-        layoutName: numbersToggle,
-      })
-    },
-    handleSpecialChars() {
-      let currentLayout = this.keyboard.options.layoutName
-      let toggle = currentLayout !== 'spc' ? 'spc' : 'default'
-
-      this.keyboard.setOptions({
-        layoutName: toggle,
-      })
-    },
-  },
-  watch: {
-    input(input) {
-      // this.keyboard.setInput(input)
     },
   },
 }
