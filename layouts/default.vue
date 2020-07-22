@@ -1,13 +1,27 @@
 <template>
   <v-app @resize="resize">
     <SnackBar />
-    <v-bottom-navigation v-if="!uiLandscape" dark app fixed router>
-      <v-btn v-for="button in buttons" :key="button.title" :to="button.to">
+    <v-bottom-navigation
+      v-if="!uiLandscape"
+      dark
+      app
+      fixed
+      router
+      height="56"
+      class="bottom-bar justify-space-between"
+    >
+      <v-btn
+        flat
+        v-for="button in buttons"
+        :key="button.title"
+        :to="button.to"
+        min-width="56"
+        small
+      >
         <!-- <span>{{ button.title }}</span> -->
         <v-icon>{{ button.icon }}</v-icon>
       </v-btn>
     </v-bottom-navigation>
-
     <v-navigation-drawer
       v-if="uiLandscape"
       dark
@@ -18,7 +32,11 @@
       fixed
       mandatory
     >
-      <v-list dense nav>
+      <v-list
+        dense
+        nav
+        class="d-flex flex-column-reverse justify-space-between fill-height"
+      >
         <v-list-item
           v-for="button in buttons"
           :key="button.title"
@@ -69,6 +87,11 @@ export default {
         },
         {
           icon: 'mdi-function',
+          title: 'Fn Keys',
+          to: '/fn',
+        },
+        {
+          icon: 'mdi-volume-high',
           title: 'Fn Keys',
           to: '/fn',
         },
@@ -129,5 +152,8 @@ export default {
   position: absolute;
   width: calc(100% - 56px);
   height: 100%;
+}
+.bottom-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 </style>
