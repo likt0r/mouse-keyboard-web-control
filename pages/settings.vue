@@ -48,7 +48,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import Logo from '~/components/Logo.vue'
 import TouchPad from '~/components/TouchPad.vue'
 
 export default {

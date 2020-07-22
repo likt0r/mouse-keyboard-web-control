@@ -70,13 +70,9 @@ export default {
           x: event.touches[0].clientX - oldPosX,
           y: event.touches[0].clientY - oldPosY,
         }
-        console.log('before trans', delta)
         delta = tools.cartesian2polar(delta)
-        console.log('polar', delta)
         delta.r = Math.pow(delta.r, this.touchAccel) * this.touchSpeed
-        console.log('after trans', delta)
         delta = tools.polar2cartesian(delta)
-        console.log('in cart', delta)
         this.moveThrottel.send(delta)
       }
       // Three fingers Mouse wheel simualtion
@@ -138,10 +134,11 @@ export default {
     trackPointer() {},
   },
   beforeMount() {
-    this.moveThrottel = requestThrottel(
-      this.$axios,
-      '/api/mouse/move',
-      function (pipeline) {
+    this.moveThrottel = requestThrottel({
+      axios: this.$axios,
+      method: 'post',
+      url: '/api/mouse/move',
+      accumulator: function (pipeline) {
         return pipeline.reduce(
           (acc, data) => {
             acc.x += data.x
@@ -154,13 +151,13 @@ export default {
           }
         )
       },
-      (data) => {
+      preSendFilter: (data) => {
         return {
           x: Math.round(data.x),
           y: Math.round(data.y),
         }
-      }
-    )
+      },
+    })
   },
 }
 </script>

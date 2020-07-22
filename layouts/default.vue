@@ -1,27 +1,7 @@
 <template>
   <v-app @resize="resize">
     <SnackBar />
-    <v-bottom-navigation
-      v-if="!uiLandscape"
-      dark
-      app
-      fixed
-      router
-      height="56"
-      class="bottom-bar justify-space-between"
-    >
-      <v-btn
-        flat
-        v-for="button in buttons"
-        :key="button.title"
-        :to="button.to"
-        min-width="56"
-        small
-      >
-        <!-- <span>{{ button.title }}</span> -->
-        <v-icon>{{ button.icon }}</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
+    <Magnifier />
     <v-navigation-drawer
       v-if="uiLandscape"
       dark
@@ -56,17 +36,48 @@
     <v-main :class="`bg ${uiLandscape ? 'landscape' : 'portrait'}`">
       <nuxt />
     </v-main>
+
+    <v-bottom-navigation
+      v-if="!uiLandscape"
+      dark
+      app
+      fixed
+      router
+      height="56"
+      class="bottom-bar justify-space-between"
+    >
+      <v-btn
+        v-for="button in buttons"
+        :key="button.title"
+        :to="button.to"
+        min-width="56"
+        small
+        :nuxt="button.nuxt"
+        @click="button.click && button.click()"
+        :input-value="button.inputValue"
+      >
+        <!-- <span>{{ button.title }}</span> -->
+        <v-icon>{{ button.icon }}</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
+    <VolumeControl v-if="showVolumeControl" />
+    <Commands v-if="showCommands" @closeMe="showCommands = false" />
   </v-app>
 </template>
 
 <script>
 import TouchPad from '~/components/TouchPad.vue'
+import VolumeControl from '~/components/VolumeControl.vue'
+import Commands from '~/components/Commands'
 import SnackBar from '~/components/SnackBar.vue'
+import Magnifier from '~/components/Magnifier'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
     TouchPad,
+    Commands,
+    Magnifier,
   },
   data() {
     return {
@@ -74,31 +85,45 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      showVolumeControl: false,
+      showCommands: false,
       buttons: [
         {
           icon: 'mdi-mouse',
           title: 'Mouse',
           to: '/',
+          nuxt: true,
         },
         {
           icon: 'mdi-keyboard',
           title: 'Keyboard',
           to: '/keyboard',
+          nuxt: true,
         },
         {
-          icon: 'mdi-function',
-          title: 'Fn Keys',
-          to: '/fn',
+          icon: 'mdi-application',
+          title: 'Command',
+          click: () => {
+            this.showVolumeControl = false
+            this.showCommands = !this.showCommands
+          },
+          inputValue: this.showCommands,
         },
+
         {
           icon: 'mdi-volume-high',
-          title: 'Fn Keys',
-          to: '/fn',
+          title: 'Volume',
+          click: () => {
+            this.showCommands = false
+            this.showVolumeControl = !this.showVolumeControl
+          },
+          inputValue: this.showVolumeControl,
         },
         {
           icon: 'mdi-tune',
           title: 'Settings',
           to: '/settings',
+          nuxt: true,
         },
       ],
       miniVariant: false,
