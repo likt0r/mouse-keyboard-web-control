@@ -1,20 +1,24 @@
-export default function factory(
+export default function factory({
   axios,
+  method,
   url,
-  dataAccumulator,
-  preSendAlteration
-) {
+  accumulator,
+  preSendFilter,
+}) {
   let dataPipeline = []
   let pending = false
-  let _preSendAlteration = preSendAlteration
+  let _preSendFilter = preSendFilter
   return {
     async send(data) {
       if (data) dataPipeline.push(data)
       if (!pending) {
         pending = true
-        const accumulated = dataAccumulator(dataPipeline)
+        const accumulated = accumulator(dataPipeline)
         dataPipeline = []
-        await axios.post(url, _preSendAlteration(accumulated))
+        await axios[method](
+          url,
+          _preSendFilter ? _preSendFilter(accumulated) : accumulated
+        )
         pending = false
         if (dataPipeline.length > 0) {
           this.send()
@@ -27,8 +31,8 @@ export default function factory(
     cancelPending() {
       dataPipeline = []
     },
-    setPreSendAlteration(alteration) {
-      _preSendAlteration = alteration
+    setpreSendFilter(alteration) {
+      _preSendFilter = alteration
     },
   }
 }
