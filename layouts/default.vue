@@ -1,6 +1,7 @@
 <template>
   <v-app @resize="resize">
     <SnackBar />
+    <TimerDisplay />
     <Magnifier />
     <v-navigation-drawer
       v-if="uiLandscape"
@@ -60,6 +61,7 @@
         <v-icon>{{ button.icon }}</v-icon>
       </v-btn>
     </v-bottom-navigation>
+    <ShutdownDialog />
     <VolumeControl v-if="showVolumeControl" />
     <Commands v-if="showCommands" @closeMe="showCommands = false" />
   </v-app>
@@ -70,7 +72,9 @@ import TouchPad from '~/components/TouchPad.vue'
 import VolumeControl from '~/components/VolumeControl.vue'
 import Commands from '~/components/Commands'
 import SnackBar from '~/components/SnackBar.vue'
+import TimerDisplay from '~/components/TimerDisplay.vue'
 import Magnifier from '~/components/Magnifier'
+import ShutdownDialog from '~/components/ShutdownDialog'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -78,6 +82,7 @@ export default {
     TouchPad,
     Commands,
     Magnifier,
+    TimerDisplay,
   },
   data() {
     return {

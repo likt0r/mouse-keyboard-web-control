@@ -23,7 +23,6 @@ app.post('/move', function (req, res) {
  */
 app.post('/click', function (req, res) {
   const { button } = req.body
-  console.log('/click ', button)
   if (button === 'left') exec(`xdotool click ${1}`)
   else if (button === 'right') exec(`xdotool click ${3}`)
   else if (button === 'middle') exec(`xdotool click ${2}`)
@@ -34,7 +33,6 @@ app.post('/click', function (req, res) {
 })
 app.post('/wheel', function (req, res) {
   const { direction } = req.body
-  console.log('/wheel ', direction)
   if (direction === 'up') exec(`xdotool click ${4}`)
   else if (direction === 'down') exec(`xdotool click ${5}`)
   else {
@@ -46,7 +44,6 @@ app.post('/wheel', function (req, res) {
 
 app.post('/mouse-down', function (req, res) {
   const { button } = req.body
-  console.log('/mouse-down ', button)
   if (button === 'left') exec(`xdotool mousedown ${1}`)
   else if (button === 'right') exec(`xdotool mousedown ${3}`)
   else if (button === 'middle') exec(`xdotool mousedown ${2}`)
@@ -58,7 +55,6 @@ app.post('/mouse-down', function (req, res) {
 
 app.post('/mouse-up', function (req, res) {
   const { button } = req.body
-  console.log('/mouse-up ', button)
   if (button === 'left') exec(`xdotool mouseup ${1}`)
   else if (button === 'right') exec(`xdotool mouseup ${3}`)
   else if (button === 'middle') exec(`xdotool mouseup ${2}`)

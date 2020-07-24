@@ -47,14 +47,13 @@ export default {
           icon: 'mdi-power',
           title: 'shutdown',
           click: () => {
-            this.$axios.post('/api/commands/shutdown', { time: 0 })
+            this.$store.dispatch('shutdown/showDialog', { show: true })
             this.$emit('closeMe')
           },
         },
       ],
     }
   },
-  computed: {},
   methods: {},
 }
 </script>
