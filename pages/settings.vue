@@ -56,12 +56,14 @@ export default {
     return {
       speed: this.$store.state.settings.touchSpeed * 10,
       accel: this.$store.state.settings.touchAccel * 100,
+      keyboardDisplayTimeout: this.$store.state.settings.keyboardDisplayTimeout,
     }
   },
   methods: {
     ...mapActions({
       setTouchAccel: 'settings/setTouchAccel',
       setTouchSpeed: 'settings/setTouchSpeed',
+      setKeyboardDisplayTimeout: 'settings/setKeyboardDisplayTimeout',
     }),
   },
   watch: {
@@ -70,6 +72,9 @@ export default {
     },
     accel(newVal) {
       this.setTouchAccel(newVal / 100)
+    },
+    keyboardDisplayTimeout(newVal) {
+      this.setKeyboardDisplayTimeout(newVal)
     },
   },
 }

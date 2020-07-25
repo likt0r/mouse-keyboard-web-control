@@ -43,7 +43,8 @@ export default {
   computed: {
     ...mapState({
       uiLandscape: (state) => state.device.uiLandscape,
-      keyboardDisplayTimout: (state) => state.settings.keyboardDisplayTimout,
+      keyboardDisplayTimout: (state) =>
+        state.settings.keyboardDisplayTimeout * 1000,
     }),
   },
   methods: {

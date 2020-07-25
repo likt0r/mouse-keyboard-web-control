@@ -1,7 +1,7 @@
 export const state = () => ({
   touchSpeed: 2,
   touchAccel: 1.1,
-  keyboardDisplayTimout: 6000,
+  keyboardDisplayTimeout: 6,
 })
 
 export const mutations = {
@@ -11,6 +11,9 @@ export const mutations = {
   SET_TOUCH_ACCEL(state, accel) {
     state.touchAccel = accel
   },
+  SET_KEYBOARD_DISPLAY_TIMEOUT(state, timeout) {
+    state.keyboardDisplayTimeout = timeout
+  },
 }
 export const actions = {
   setTouchSpeed({ commit }, speed) {
@@ -18,5 +21,8 @@ export const actions = {
   },
   setTouchAccel({ commit }, accel) {
     commit('SET_TOUCH_ACCEL', accel)
+  },
+  setKeyboardDisplayTimeout({ commit }, timeout) {
+    commit('SET_KEYBOARD_DISPLAY_TIMEOUT', timeout)
   },
 }
