@@ -146,6 +146,8 @@ export default {
 .bg {
   background: url('/carbon.jpg') no-repeat center center;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 .portrait {
   position: absolute;
