@@ -1,8 +1,8 @@
 <template>
   <v-app @resize="resize">
     <SnackBar />
-    <TimerDisplay />
-    <Magnifier />
+    <TimerControl />
+    <MagnifierControl />
 
     <v-main :class="`bg ${uiLandscape ? 'landscape' : 'portrait'}`">
       <nuxt />
@@ -10,67 +10,87 @@
 
     <v-bottom-navigation
       dark
+      ref="drawer"
       app
       fixed
-      router
       height="56"
       :class="`bottom-bar ${
-        uiLandscape ? 'bottom-bar--landscape' : ''
-      } justify-space-between bottom-bar `"
+        uiLandscape
+          ? 'bottom-bar--landscape align-center'
+          : 'bottom-bar--portrait justify-space-center'
+      }  bottom-bar `"
     >
       <v-btn
-        v-for="button in buttons"
+        v-for="(button, index) in buttons"
         :key="button.title"
         :to="button.to"
+        :class="actives[index] ? 'v-btn--highlight' : undefined"
+        :active="actives[index]"
         min-width="56"
         small
         :nuxt="button.nuxt"
         @click="button.click && button.click()"
         :input-value="button.inputValue"
       >
-        <!-- <span>{{ button.title }}</span> -->
         <v-icon>{{ button.icon }}</v-icon>
       </v-btn>
     </v-bottom-navigation>
     <ShutdownDialog />
     <VolumeControl v-if="showVolumeControl" />
-    <Commands v-if="showCommands" @closeMe="showCommands = false" />
+    <CommandsControl v-if="showCommands" @closeMe="showCommands = false" />
+    <KeyboardControl v-if="showKeyboard" />
   </v-app>
 </template>
 
 <script>
+import VolumeControl from '~/components/controls/Volume.vue'
+import TimerControl from '~/components/controls/Timer.vue'
+import MagnifierControl from '~/components/controls/Magnifier'
+import CommandsControl from '~/components/controls/Commands'
+import KeyboardControl from '~/components/controls/Keyboard'
+
 import TouchPad from '~/components/TouchPad.vue'
-import VolumeControl from '~/components/VolumeControl.vue'
-import Commands from '~/components/Commands'
 import SnackBar from '~/components/SnackBar.vue'
-import TimerDisplay from '~/components/TimerDisplay.vue'
-import Magnifier from '~/components/Magnifier'
 import ShutdownDialog from '~/components/ShutdownDialog'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
+    VolumeControl,
+    CommandsControl,
+    KeyboardControl,
     TouchPad,
-    Commands,
-    Magnifier,
-    TimerDisplay,
+    MagnifierControl,
+    TimerControl,
   },
   data() {
     return {
       showVolumeControl: false,
       showCommands: false,
-      buttons: [
-        {
-          icon: 'mdi-mouse',
-          title: 'Mouse',
-          to: '/',
-          nuxt: true,
-        },
+      showKeyboard: false,
+      title: 'Wireless Keyboard',
+    }
+  },
+  computed: {
+    ...mapState({ uiLandscape: (state) => state.device.uiLandscape }),
+    actives() {
+      return [
+        this.showKeyboard,
+        this.showCommands,
+        this.showVolumeControl,
+        this.$route.path === '/settings',
+      ]
+    },
+
+    buttons() {
+      this.$route.path
+      return [
         {
           icon: 'mdi-keyboard',
           title: 'Keyboard',
-          to: '/keyboard',
-          nuxt: true,
+          click: () => {
+            this.showKeyboard = !this.showKeyboard
+          },
         },
         {
           icon: 'mdi-application',
@@ -94,15 +114,10 @@ export default {
         {
           icon: 'mdi-tune',
           title: 'Settings',
-          to: '/settings',
-          nuxt: true,
+          to: this.$route.path === '/settings' ? '/' : '/settings',
         },
-      ],
-      title: 'Wireless Keyboard',
-    }
-  },
-  computed: {
-    ...mapState({ uiLandscape: (state) => state.device.uiLandscape }),
+      ]
+    },
   },
   methods: {
     ...mapActions({ setUiLandscape: 'device/setUiLandscape' }),
@@ -147,16 +162,31 @@ export default {
   width: calc(100% - 56px);
   height: 100%;
 }
-.bottom-bar {
+.bottom-bar--portrait {
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 .bottom-bar--landscape {
-  height: 100%;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  height: 100% !important;
   transform: none;
   width: 56px;
   top: 0;
   right: 0;
   left: unset;
-  flex-direction: column;
+  flex-direction: column-reverse;
+}
+.bottom-bar--landscape >>> .v-btn {
+  min-width: 56px;
+  max-height: 56px;
+  height: 56px;
+}
+.v-btn::before {
+  background-color: transparent !important;
+}
+.v-btn--active {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.bottom-bar >>> .v-btn.v-btn--highlight {
+  color: rgba(255, 255, 255, 1) !important;
 }
 </style>

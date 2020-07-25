@@ -19,7 +19,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import requestThrottel from '~/tools/requestThrottel'
-import Toolbar from './Toolbar'
+import Toolbar from '../Toolbar'
 export default {
   components: {
     Toolbar,

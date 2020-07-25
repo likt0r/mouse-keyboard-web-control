@@ -33,4 +33,5 @@ export default {
   '{metaright}': 'cmd ⌘',
   '{default}': 'abc',
   '{fn}': 'fn',
+  '{space}': 'space',
 }

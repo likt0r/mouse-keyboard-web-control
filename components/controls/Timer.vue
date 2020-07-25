@@ -1,7 +1,9 @@
 <template>
   <div
     v-if="active"
-    class="timer-display ma-4 mt-5"
+    :class="`timer-display timer-display--${
+      uiLandscape ? 'landscape' : 'portrait'
+    } ma-4 mt-5`"
     @click="cancelDialog = true"
   >
     <v-hover>
@@ -10,9 +12,6 @@
         :class="`elevation-${hover ? 5 : 2}`"
         v-ripple
         dark
-        fixed
-        top
-        left
         outlined
       >
         <v-avatar>
@@ -80,8 +79,18 @@ export default {
 <style scoped>
 .timer-display {
   position: fixed;
-  top: 0;
   left: 0;
   z-index: 10;
+}
+.timer-display {
+  position: fixed;
+  left: 0;
+  z-index: 10;
+}
+.timer-display--landscape {
+  bottom: 0;
+}
+.timer-display--portrait {
+  top: 0;
 }
 </style>

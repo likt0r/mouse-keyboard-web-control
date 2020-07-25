@@ -7,7 +7,6 @@
       color="grey darken-3"
       @click="muted = !muted"
     >
-      <!-- <span>{{ button.title }}</span> -->
       <v-icon>{{
         muted ? 'mdi-volume-variant-off' : 'mdi-volume-high'
       }}</v-icon>
@@ -28,7 +27,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import requestThrottel from '~/tools/requestThrottel'
-import Toolbar from './Toolbar'
+import Toolbar from '../Toolbar'
 export default {
   components: {
     Toolbar,
