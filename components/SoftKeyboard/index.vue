@@ -29,7 +29,6 @@ export default {
   }),
   methods: {
     onKeyReleased(button) {
-      console.log('pressedButton b', button)
       this.buttonPressed = false
       if (button === '{shift}') {
         return this.handleShift()
@@ -43,11 +42,19 @@ export default {
         button.length > 1
           ? KEY_MAP[button.slice(1, button.length - 1)]
           : button.charCodeAt(0)
-      console.log('pressedButton C', code)
+      // Clear input if enter is pressed
+      if (code === 65293) {
+        this.keyboard.clearInput()
+        this.$emit('input', '')
+      }
       this.$emit('key', code)
     },
     onKeyPress(button) {
       this.buttonPressed = true
+    },
+    clearInput() {
+      this.keyboard.clearInput()
+      this.$emit('input', '')
     },
 
     handleShift() {
@@ -64,6 +71,7 @@ export default {
         theme: this.theme,
         onKeyReleased: this.onKeyReleased,
         onKeyPress: this.onKeyPress,
+        onChange: (input) => this.$emit('input', input),
         mergeDisplay: true,
         layoutName: 'default',
         layout,

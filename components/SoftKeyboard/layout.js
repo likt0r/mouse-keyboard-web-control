@@ -4,21 +4,21 @@ export default {
     'q w e r t y u i o p',
     '{tab} a s d f g h j k l',
     '{shift} z x c v b n m {backspace}',
-    '{numbers} {spc} {fn} {space} {enter}',
+    '{numbers} {spc} {fn} {space} . {enter}',
   ],
   alt: [
     '1 2 3 4 5 6 7 8 9 0',
     'q w e r t y u i o p',
     '{tab} a s d f g h j k l',
     '{shift} z x c v b n m {backspace}',
-    '{numbers} {spc} {fn} {space} {enter}',
+    '{numbers} {spc} {fn} {space} . {enter}',
   ],
   shift: [
     '! " § $ % & / ( ) =',
     'Q W E R T Y U I O P',
     '{tab} A S D F G H J K L',
     '{shift} Z X C V B N M {backspace}',
-    '{numbers} {spc} {fn} {space} {enter}',
+    '{numbers} {spc} {fn} {space} . {enter}',
   ],
 
   spc: [
@@ -39,6 +39,6 @@ export default {
     '7 8 9 :',
     '4 5 6 .',
     '1 2 3 ,',
-    '{default} 0 {delete} {backspace}',
+    '{default} 0 {delete} {enter}',
   ],
 }

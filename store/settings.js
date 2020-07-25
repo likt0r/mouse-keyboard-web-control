@@ -1,6 +1,7 @@
 export const state = () => ({
   touchSpeed: 2,
   touchAccel: 1.1,
+  keyboardDisplayTimout: 6000,
 })
 
 export const mutations = {
