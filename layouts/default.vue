@@ -3,49 +3,20 @@
     <SnackBar />
     <TimerDisplay />
     <Magnifier />
-    <v-navigation-drawer
-      v-if="uiLandscape"
-      dark
-      right
-      mini-variant
-      mini-variant-width="56"
-      permanent
-      fixed
-      mandatory
-    >
-      <v-list
-        dense
-        nav
-        class="d-flex flex-column-reverse justify-space-between fill-height"
-      >
-        <v-list-item
-          v-for="button in buttons"
-          :key="button.title"
-          :to="button.to"
-        >
-          <v-list-item-action>
-            <v-icon>{{ button.icon }}</v-icon>
-          </v-list-item-action>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ button.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
 
     <v-main :class="`bg ${uiLandscape ? 'landscape' : 'portrait'}`">
       <nuxt />
     </v-main>
 
     <v-bottom-navigation
-      v-if="!uiLandscape"
       dark
       app
       fixed
       router
       height="56"
-      class="bottom-bar justify-space-between"
+      :class="`bottom-bar ${
+        uiLandscape ? 'bottom-bar--landscape' : ''
+      } justify-space-between bottom-bar `"
     >
       <v-btn
         v-for="button in buttons"
@@ -86,10 +57,6 @@ export default {
   },
   data() {
     return {
-      bottomNav: 0,
-      clipped: false,
-      drawer: false,
-      fixed: false,
       showVolumeControl: false,
       showCommands: false,
       buttons: [
@@ -131,9 +98,6 @@ export default {
           nuxt: true,
         },
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
       title: 'Wireless Keyboard',
     }
   },
@@ -185,5 +149,14 @@ export default {
 }
 .bottom-bar {
   border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.bottom-bar--landscape {
+  height: 100%;
+  transform: none;
+  width: 56px;
+  top: 0;
+  right: 0;
+  left: unset;
+  flex-direction: column;
 }
 </style>
