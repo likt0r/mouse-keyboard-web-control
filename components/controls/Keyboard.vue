@@ -42,6 +42,7 @@ export default {
 <style scoped>
 .keyboard-control {
   z-index: 1;
+  height: auto;
 }
 .keyboard-control--landscape {
   position: fixed;
