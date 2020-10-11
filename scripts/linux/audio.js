@@ -13,7 +13,6 @@ module.exports = {
             console.error(`exec error: ${error}`)
             reject(error)
           }
-          console.log(`stdout:${parseInt(stdout)}`)
           resolve(parseInt(stdout))
         }
       )
@@ -23,7 +22,6 @@ module.exports = {
     return new Promise((resolve, reject) => {
       if (typeof volume === 'number') {
         const clampedValue = Math.max(0, Math.min(100, volume))
-        console.log(clampedValue)
         execFile(
           path.join(__dirname, '/setVolume.sh'),
           [clampedValue + '%'],
@@ -47,7 +45,6 @@ module.exports = {
             console.error(`exec error: ${error}`)
             reject(error)
           }
-          console.log(`stdout:${stdout}`)
           resolve(stdout.trim() === 'yes' ? true : false)
         }
       )
@@ -55,7 +52,6 @@ module.exports = {
   },
   setMuteStatus(mute) {
     return new Promise((resolve, reject) => {
-      console.log(mute)
       if (typeof mute === 'boolean') {
         execFile(
           path.join(__dirname, '/setMute.sh'),

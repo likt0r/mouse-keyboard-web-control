@@ -39,7 +39,6 @@ export default {
 
   methods: {
     touchStart(event) {
-      console.log('Touch Start')
       this.trackPointerPosition = true
       startPosX = oldPosX = event.touches[0].clientX
       startPosY = oldPosY = event.touches[0].clientY
@@ -128,7 +127,6 @@ export default {
         }
       }
       this.trackPointerPosition = false
-      console.log('Touch End')
       event.preventDefault()
     },
     trackPointer() {},

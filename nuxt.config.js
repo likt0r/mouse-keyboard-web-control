@@ -1,5 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
-
 export default {
   /*
    ** Nuxt rendering mode
@@ -111,7 +109,7 @@ export default {
    */
   build: {},
   server: {
-    port: 8000, // default: 3000
+    port: 13428, // default: 3000
     host: '0.0.0.0', // default: localhost
   },
 }

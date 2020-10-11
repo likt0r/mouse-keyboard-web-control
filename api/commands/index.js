@@ -52,7 +52,6 @@ app.post('/magnifier', async function (req, res) {
 })
 
 app.get('/magnifier', async function (req, res) {
-  console.log('/magnifier get')
   const active = await magnifier.get()
   return res.json({ active })
 })

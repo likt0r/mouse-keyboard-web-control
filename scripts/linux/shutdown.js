@@ -12,8 +12,6 @@ module.exports = {
             reject(error)
           }
           const shutdownTime = parseInt(stdout.split(' ')[2])
-          console.log(shutdownTime)
-          console.log(Date.now())
 
           //  if no shutdown is sheduled 0 is returned from busctl
           resolve(

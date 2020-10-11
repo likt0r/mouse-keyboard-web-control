@@ -22,6 +22,22 @@ app.post('/volume', async function (req, res) {
   res.end()
 })
 
+app.post('/up', async function (req, res) {
+  const current = await audio.getVolume()
+  const volume = Math.min(100, current + 10)
+  await audio.setVolume(volume)
+
+  res.json({ volume })
+})
+
+app.post('/down', async function (req, res) {
+  const current = await audio.getVolume()
+  const volume = Math.max(0, Math.min(100, current - 10))
+  await audio.setVolume(volume)
+
+  res.json({ volume })
+})
+
 app.get('/mute', async function (req, res) {
   const muted = await audio.getMuteStatus()
   res.json({ muted })

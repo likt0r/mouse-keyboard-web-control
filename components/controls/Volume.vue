@@ -66,7 +66,6 @@ export default {
     const { data } = await this.$axios.get('/api/audio/volume')
     this.volume = data.volume
     const { data: data2 } = await this.$axios.get('/api/audio/mute')
-    console.log('Result', data2)
     this.muted = data2.muted
   },
   watch: {

@@ -53,14 +53,14 @@ export default {
     },
     onKey(code) {
       this.showInput = true
-      if (!hideInputTimeout) {
+      if (hideInputTimeout) {
         clearTimeout(hideInputTimeout)
-        hideInputTimeout = setTimeout(() => {
-          this.showInput = false
-          hideInputTimeout = false
-          this.$refs.keyboard.clearInput()
-        }, this.keyboardDisplayTimout)
       }
+      hideInputTimeout = setTimeout(() => {
+        this.showInput = false
+        hideInputTimeout = undefined
+        this.$refs.keyboard.clearInput()
+      }, this.keyboardDisplayTimout)
 
       this.$axios.post('/api/keyboard/key', {
         code,

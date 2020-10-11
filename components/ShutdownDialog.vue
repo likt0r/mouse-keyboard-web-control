@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     click() {
-      console.log('', this.minutes)
       this.$store.dispatch('shutdown/startTimer', { minutes: this.minutes })
       this.dialog = false
     },

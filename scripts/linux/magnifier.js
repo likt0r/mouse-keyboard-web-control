@@ -11,7 +11,6 @@ module.exports = {
             console.error(`exec error: ${error}`)
             reject(error)
           }
-          console.log(`stdout:${stdout}`)
           resolve(stdout === 'true')
         }
       )
